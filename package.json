@@ -1,0 +1,34 @@
+{
+  "name": "node-test-tools",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test:ava": "ava",
+    "test:jest": "jest --coverage ./jest",
+    "test:lab": "lab -c -v ./lab",
+    "test:mocha": "mocha ./mocha",
+    "test:tape": "tape tape/**/*.js | tap-summary",
+    "test": "npm-run-all test:*"
+  },
+  "ava": {
+    "files": [
+      "ava/**/*"
+    ]
+  },
+  "keywords": [],
+  "author": "David Neal <david@reverentgeek.com> (https://reverentgeek.com)",
+  "license": "MIT",
+  "devDependencies": {
+    "@hapi/code": "^8.0.1",
+    "@hapi/lab": "^22.0.3",
+    "ava": "^3.0.0",
+    "eslint": "^6.8.0",
+    "eslint-config-reverentgeek": "^2.0.1",
+    "jest": "^25.1.0",
+    "mocha": "^7.0.0",
+    "npm-run-all": "^4.1.5",
+    "tap-summary": "^4.0.0",
+    "tape": "^4.13.0"
+  }
+}

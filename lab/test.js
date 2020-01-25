@@ -4,11 +4,11 @@ const Code = require( "@hapi/code" );
 const Lab = require( "@hapi/lab" );
 
 const { expect } = Code;
-const { experiment, it, before, after, beforeEach } = exports.lab = Lab.script();
+const { describe, it, before, after, beforeEach } = exports.lab = Lab.script();
 
 const calc = require( "../src/calc" );
 
-experiment( "Calculator", () => {
+describe( "Calculator", () => {
 	before( () => {
 		console.log( "beforeAll executes once before all tests" );
 	} );
@@ -17,7 +17,7 @@ experiment( "Calculator", () => {
 		console.log( "afterAll executes once after all tests" );
 	} );
 
-	experiment( "adding", () => {
+	describe( "adding", () => {
 		beforeEach( () => {
 			console.log( "beforeEach executes before every test" );
 		} );
@@ -31,7 +31,7 @@ experiment( "Calculator", () => {
 		} );
 	} );
 
-	experiment( "error", () => {
+	describe( "error", () => {
 		it( "should throw an error", () => {
 			try {
 				calc.badd();

@@ -100,7 +100,7 @@ By itself, Mocha is a solid no-frills test runner. The features it lacks can be 
 
 ### Jest
 
-[Jest](https://jestjs.io/) is a testing framework developed by Facebook. Originally designed to make UI testing easier for React developers, it's now a full standalone suite of tools for any type of JavaScript project (including Node.js) and includes features such as a built-in assertion library, code coverage, and mocking. Jest also runs multiple test suites concurrently, which can speed up the overall testing process.
+[Jest](https://jestjs.io/) is a testing framework developed by Facebook. Originally designed to make UI testing easier for React developers, it's now a full standalone suite of tools for any type of JavaScript project (including Node.js) and includes features such as a built-in assertion library, code coverage, and mocking. Jest also runs multiple test suites concurrently, which can speed up the overall testing process. The downside of parallel execution is it can make debugging tests more difficult.
 
 For anyone coming from a BDD-style of Mocha, Jest tests are pretty familiar looking. Jest adds several global functions to help with setting up and running tests, such as `describe`, `it`, `expect`, and the `jest` object (used mostly for mocking).
 
@@ -432,3 +432,17 @@ A dynamic language like JavaScript is a two-edged sword. Dynamic types give you 
 
 ## Final Thoughts on Testing Code in Node.js
 
+I don't believe you can go wrong choosing from any of these test runners and tools. If I were starting a new project today, my first choice would be Jest. It has most everything built-in, a large community following, and lots of plugins available. However, if Jest's built-in mocking didn't prove to provide enough control, I would reach for TestDouble.
+
+What are your thoughts? Did I miss your favorite testing tools? Let me know down in the comments below!
+
+If you liked reading this, we have a lot more posts you may be interested in!
+
+* [What's New for Node.js in 2020](/blog/2019/12/04/whats-new-nodejs-2020)
+* [Build a Secure Node.js App with SQL Server and hapi](/blog/2019/03/11/node-sql-server)
+* [Build Simple Authentication in Express in 15 Minutes](/blog/2019/05/31/simple-auth-express-fifteen-minutes)
+* [An Illustrated Guide to OAuth and OpenID Connect](/blog/2019/10/21/illustrated-guide-to-oauth-and-oidc)
+* [What's New in JavaScript for 2019](/blog/2019/01/22/whats-new-in-es2019)
+* [Learn JavaScript in 2019](/blog/2018/12/19/learn-javascript-in-2019)
+
+If you like this blog post and want to see more like it, follow [@oktadev on Twitter](https://twitter.com/oktadev), subscribe to [our YouTube channel](https://youtube.com/c/oktadev), or follow us [on LinkedIn](https://www.linkedin.com/company/oktadev/).

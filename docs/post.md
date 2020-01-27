@@ -1,6 +1,6 @@
 # The Best Testing Tools for Node.js
 
-Testing is an essential discipline for *any* non-trivial software project. With a dynamic language like JavaScript, testing is an absolute necessity. This post is on the best tools currently available for Node.js, but here's a quick look at some of the many benefits of testing.
+Testing is an essential discipline for *any* non-trivial software project. With a dynamic language like JavaScript, testing is an absolute necessity. Even the most basic testing can give you numerous benefits:
 
 * Find bugs!
 * Guard against future bug regressions.
@@ -8,7 +8,7 @@ Testing is an essential discipline for *any* non-trivial software project. With 
 * Improve the design, quality, and maintainability of software.
 * Refactor code with confidence.
 
-In this post, we'll look at the current tools available for Node.js for running automated tests along with a few testing utilities to complement a good testing discipline.
+In this post, we'll take a look at Node.js tools for running automated tests and building good testing discipline.
 
 > Note: Although some of the tools covered in this post support user interface (UI) tests and front-end integration tests, the focus here is on testing pure back-end Node.js code. If you are looking for UI testing, take a peek at [Storybook](https://storybook.js.org/), [Cypress](https://www.cypress.io/), or [Puppeteer](https://pptr.dev/).
 
@@ -22,12 +22,12 @@ For each of the following test runners, I've included a sample set of tests so y
 "use strict";
 
 module.exports = {
-  add: ( num1, num2 ) => {
-    return num1 + num2;
-  },
-  badd: () => {
-    throw new Error( "it blowed up" );
-  }
+ add: ( num1, num2 ) => {
+   return num1 + num2;
+ },
+ badd: () => {
+   throw new Error( "it blowed up" );
+ }
 };
 ```
 
@@ -46,57 +46,57 @@ const assert = require( "assert" );
 const calc = require( "../src/calc" );
 
 describe( "Calculator", () => {
-  before( () => {
-    console.log( "before executes once before all tests" );
-  } );
+ before( () => {
+   console.log( "before executes once before all tests" );
+ } );
 
-  after( () => {
-    console.log( "after executes once after all tests" );
-  } );
+ after( () => {
+   console.log( "after executes once after all tests" );
+ } );
 
-  describe( "adding", () => {
-    beforeEach( () => {
-      console.log( "beforeEach executes before every test" );
-    } );
-    it( "should return 4 when adding 2 + 2", () => {
-      assert.equal( calc.add( 2, 2 ), 4 );
-    } );
+ describe( "adding", () => {
+   beforeEach( () => {
+     console.log( "beforeEach executes before every test" );
+   } );
+   it( "should return 4 when adding 2 + 2", () => {
+     assert.equal( calc.add( 2, 2 ), 4 );
+   } );
 
-    it( "should return 0 when adding zeros", () => {
-      assert.equal( calc.add( 0, 0 ), 0 );
-    } );
-  } );
+   it( "should return 0 when adding zeros", () => {
+     assert.equal( calc.add( 0, 0 ), 0 );
+   } );
+ } );
 
-  describe( "error", () => {
-    it( "should return an error", () => {
-      assert.throws( calc.badd, {
-        name: "Error",
-        message: "it blowed up"
-      } );
-    } );
-  } );
+ describe( "error", () => {
+   it( "should return an error", () => {
+     assert.throws( calc.badd, {
+       name: "Error",
+       message: "it blowed up"
+     } );
+   } );
+ } );
 } );
 ```
 
 Output:
 
 ```sh
-  Calculator
+ Calculator
 before executes once before all tests
-    adding
+   adding
 beforeEach executes before every test
-      ✓ should return 4 when adding 2 + 2
+     ✓ should return 4 when adding 2 + 2
 beforeEach executes before every test
-      ✓ should return 0 when adding zeros
-    error
-      ✓ should return an error
+     ✓ should return 0 when adding zeros
+   error
+     ✓ should return an error
 after executes once after all tests
 
 
-  3 passing (5ms)
+ 3 passing (5ms)
 ```
 
-By itself, Mocha is a solid no-frills test runner. The features it lacks can be supplemented by other proven testing utilities, such as code coverage and mocking (simulated objects/integration). It has a large community following with lots of tools and plugins available to customize it to fit your needs.
+By itself, Mocha is a solid, no-frills test runner. The features it lacks can be supplemented by other proven testing utilities, such as code coverage and mocking (simulated objects/integration). It has a large community following with lots of tools and plugins available to customize it to fit your needs.
 
 ### Jest
 
@@ -111,65 +111,65 @@ For anyone coming from a BDD-style of Mocha, Jest tests are pretty familiar look
 const calc = require( "../src/calc" );
 
 describe( "Calculator", () => {
-  beforeAll( () => {
-    console.log( "beforeAll executes once before all tests" );
-    // calc.add.mockImplementation( () => -1 );
-  } );
+ beforeAll( () => {
+   console.log( "beforeAll executes once before all tests" );
+   // calc.add.mockImplementation( () => -1 );
+ } );
 
-  afterAll( () => {
-    console.log( "afterAll executes once after all tests" );
-  } );
+ afterAll( () => {
+   console.log( "afterAll executes once after all tests" );
+ } );
 
-  describe( "adding", () => {
-    beforeEach( () => {
-      console.log( "beforeEach executes before every test" );
-    } );
+ describe( "adding", () => {
+   beforeEach( () => {
+     console.log( "beforeEach executes before every test" );
+   } );
 
-    it( "should return 4 when adding 2 + 2", () => {
-      expect( calc.add( 2, 2 ) ).toBe( 4 );
-    } );
+   it( "should return 4 when adding 2 + 2", () => {
+     expect( calc.add( 2, 2 ) ).toBe( 4 );
+   } );
 
-    it( "should return 0 when adding zeros", () => {
-      expect( calc.add( 0, 0 ) ).toBe( 0 );
-    } );
-  } );
+   it( "should return 0 when adding zeros", () => {
+     expect( calc.add( 0, 0 ) ).toBe( 0 );
+   } );
+ } );
 
-  describe( "err", () => {
-    it( "should return an error", () => {
-      expect( calc.badd ).toThrowError( "it blowed up" );
-    } );
-  } );
+ describe( "err", () => {
+   it( "should return an error", () => {
+     expect( calc.badd ).toThrowError( "it blowed up" );
+   } );
+ } );
 } );
 ```
 
 Output:
 
 ```sh
- PASS  jest/test.js
-  Calculator
-    adding
-      ✓ should return 4 when adding 2 + 2 (3ms)
-      ✓ should return 0 when adding zeros (1ms)
-    err
-      ✓ should return an error (2ms)
+PASS  jest/test.js
+ Calculator
+   adding
+     ✓ should return 4 when adding 2 + 2 (3ms)
+     ✓ should return 0 when adding zeros (1ms)
+   err
+     ✓ should return an error (2ms)
 
-  console.log jest/test.js:8
-    beforeAll executes once before all tests
+ console.log jest/test.js:8
+   beforeAll executes once before all tests
 
-  console.log jest/test.js:18
-    beforeEach executes before every test
+ console.log jest/test.js:18
+   beforeEach executes before every test
 
-  console.log jest/test.js:18
-    beforeEach executes before every test
+ console.log jest/test.js:18
+   beforeEach executes before every test
 
-  console.log jest/test.js:13
-    afterAll executes once after all tests
+ console.log jest/test.js:13
+   afterAll executes once after all tests
 
 ----------|---------|----------|---------|---------|-------------------
 File      | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s
 ----------|---------|----------|---------|---------|-------------------
 All files |     100 |      100 |     100 |     100 |
- calc.js  |     100 |      100 |     100 |     100 |
+calc.js  |     100 |      100 |     100 |     100 |
 ----------|---------|----------|---------|---------|-------------------
 Test Suites: 1 passed, 1 total
 Tests:       3 passed, 3 total
@@ -181,7 +181,7 @@ Jest has become hugely popular in the JavaScript community, and not just for Rea
 
 ### Lab and Code
 
-[Lab](https://github.com/hapijs/lab) is part of the hapi developer ecosystem. It was initially designed by Walmart Labs to work seamlessly with the hapi web framework. However, it works well on its own and with other Node.js frameworks. `Lab`, the test runner, typically goes hand-in-hand with [`code`](https://github.com/hapijs/code), the BDD-style assertion library created for it.
+[Lab](https://github.com/hapijs/lab) is part of the hapi developer ecosystem. It was initially designed by Walmart Labs to work seamlessly with the [hapi web framework](https://hapi.dev/). However, it works well on its own and with other Node.js frameworks. `Lab`, the test runner, typically goes hand-in-hand with [`code`](https://github.com/hapijs/code), the BDD-style assertion library created for it.
 
 In contrast to most other test runners, Lab *does not* add any global functions. As a result, Lab requires more setup for every suite of tests to import the `lab` and `code` dependencies. However, no globals mean there are no surprises when it comes to using the API.
 
@@ -197,37 +197,37 @@ const { describe, it, before, after, beforeEach } = exports.lab = Lab.script();
 const calc = require( "../src/calc" );
 
 describe( "Calculator", () => {
-  before( () => {
-    console.log( "beforeAll executes once before all tests" );
-  } );
+ before( () => {
+   console.log( "beforeAll executes once before all tests" );
+ } );
 
-  after( () => {
-    console.log( "afterAll executes once after all tests" );
-  } );
+ after( () => {
+   console.log( "afterAll executes once after all tests" );
+ } );
 
-  describe( "adding", () => {
-    beforeEach( () => {
-      console.log( "beforeEach executes before every test" );
-    } );
+ describe( "adding", () => {
+   beforeEach( () => {
+     console.log( "beforeEach executes before every test" );
+   } );
 
-    it( "should return 4 when adding 2 + 2", () => {
-      expect( calc.add( 2, 2 ) ).to.equal( 4 );
-    } );
+   it( "should return 4 when adding 2 + 2", () => {
+     expect( calc.add( 2, 2 ) ).to.equal( 4 );
+   } );
 
-    it( "should return 0 when adding zeros", () => {
-      expect( calc.add( 0, 0 ) ).to.equal( 0 );
-    } );
-  } );
+   it( "should return 0 when adding zeros", () => {
+     expect( calc.add( 0, 0 ) ).to.equal( 0 );
+   } );
+ } );
 
-  describe( "error", () => {
-    it( "should throw an error", () => {
-      try {
-        calc.badd();
-      } catch ( err ) {
-        expect( err ).to.be.an.error( "it blowed up" );
-      }
-    } );
-  } );
+ describe( "error", () => {
+   it( "should throw an error", () => {
+     try {
+       calc.badd();
+     } catch ( err ) {
+       expect( err ).to.be.an.error( "it blowed up" );
+     }
+   } );
+ } );
 } );
 ```
 
@@ -237,12 +237,12 @@ Output:
 beforeAll executes once before all tests
 beforeEach executes before every test
 Calculator
-  adding
-    ✔ 1) should return 4 when adding 2 + 2 (1 ms)
+ adding
+   ✔ 1) should return 4 when adding 2 + 2 (1 ms)
 beforeEach executes before every test
-    ✔ 2) should return 0 when adding zeros (0 ms)
-  error
-    ✔ 3) should throw an error (0 ms)
+   ✔ 2) should return 0 when adding zeros (0 ms)
+ error
+   ✔ 3) should throw an error (0 ms)
 afterAll executes once after all tests
 
 
@@ -254,7 +254,7 @@ Coverage: 100.00%
 
 In my experience, lab is excellent. It's simple and efficient. Lab includes code coverage, several reporters, the ability to load a custom reporter, and was one of the first JavaScript test runners to detect memory leaks. With code coverage, you can set a percentage threshold and the runner will fail if coverage doesn't meet the minimum threshold. Another cool feature of lab is the ability to randomize the order of test execution. Randomizing may uncover some obscure bugs in your code, such as leaking state or calling a promise or `async` function without awaiting the result.
 
-The only downside to lab is outside of the hapi community, lab is not very popular.
+The only downside to lab is that outside the hapi community, lab is not very popular.
 
 ### AVA
 
@@ -269,30 +269,30 @@ const test = require( "ava" );
 const calc = require( "../src/calc" );
 
 test.before( () => {
-  console.log( "before executes once before all tests" );
+ console.log( "before executes once before all tests" );
 } );
 
 test.after( () => {
-  console.log( "after executes once after all tests" );
+ console.log( "after executes once after all tests" );
 } );
 
 test.beforeEach( () => {
-  console.log( "beforeEach executes before every test" );
+ console.log( "beforeEach executes before every test" );
 } );
 
 test( "should return 4 when adding 2 + 2", t => {
-  t.is( calc.add( 2, 2 ), 4 );
+ t.is( calc.add( 2, 2 ), 4 );
 } );
 
 test( "should return 0 when adding zeros", t => {
-  t.is( calc.add( 0, 0 ), 0 );
+ t.is( calc.add( 0, 0 ), 0 );
 } );
 
 test( "err should return an error", t => {
-  const err = t.throws( () => {
-    calc.badd();
-  } );
-  t.is( err.message, "it blowed up" );
+ const err = t.throws( () => {
+   calc.badd();
+ } );
+ t.is( err.message, "it blowed up" );
 } );
 ```
 
@@ -305,7 +305,7 @@ Output:
 beforeEach executes before every test
 ⠇ err should return an error
 
-  3 tests passed
+ 3 tests passed
 ```
 
 I have the least amount of experience with AVA. One of the cool features I discovered while exploring AVA is the ability to create "TODO" tests. The tests don't fail, but they do show up in the reports to remind you there's still more work left. You have some control over which tests run in series instead of parallel using `test.serial()`. There's no built-in code coverage, but you're encouraged to use a separate utility for that.
@@ -352,26 +352,26 @@ const assert = require( "assert" );
 const td = require( "testdouble" );
 
 describe( "Mocked calculator", () => {
-  let calc;
-  beforeEach( () => {
-    calc = td.replace( "../src/calc" );
-  } );
+ let calc;
+ beforeEach( () => {
+   calc = td.replace( "../src/calc" );
+ } );
 
-  afterEach( () => {
-    td.reset();
-  } );
+ afterEach( () => {
+   td.reset();
+ } );
 
-  it( "should return 5 when adding 2 + 2?", () => {
-    const add2 = require( "../src/add2" );
-    td.when( calc.add( 2, 2 ) ).thenReturn( 5 );
-    assert.equal( add2( 2 ), 5 );
-  } );
+ it( "should return 5 when adding 2 + 2?", () => {
+   const add2 = require( "../src/add2" );
+   td.when( calc.add( 2, 2 ) ).thenReturn( 5 );
+   assert.equal( add2( 2 ), 5 );
+ } );
 
-  it( "should return 0 when adding 2 + 2?", () => {
-    const add2 = require( "../src/add2" );
-    td.when( calc.add( 2, 2 ) ).thenReturn( 0 );
-    assert.equal( add2( 2, 2 ), 0 );
-  } );
+ it( "should return 0 when adding 2 + 2?", () => {
+   const add2 = require( "../src/add2" );
+   td.when( calc.add( 2, 2 ) ).thenReturn( 0 );
+   assert.equal( add2( 2, 2 ), 0 );
+ } );
 } );
 ```
 
@@ -388,10 +388,10 @@ npx nyc mocha ./tests
 File            | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s
 ----------------|---------|----------|---------|---------|-------------------
 All files       |     100 |      100 |     100 |     100 |
- tests          |     100 |      100 |     100 |     100 |
-  test.js       |     100 |      100 |     100 |     100 |
- src            |     100 |      100 |     100 |     100 |
-  calc.js       |     100 |      100 |     100 |     100 |
+tests          |     100 |      100 |     100 |     100 |
+ test.js       |     100 |      100 |     100 |     100 |
+src            |     100 |      100 |     100 |     100 |
+ calc.js       |     100 |      100 |     100 |     100 |
 ----------------|---------|----------|---------|---------|-------------------
 ```
 
@@ -399,28 +399,28 @@ All files       |     100 |      100 |     100 |     100 |
 
 Okay, hear me out. Yes, [Visual Studio Code](https://code.visualstudio.com/) is a code editor. It also happens to include one of the best debuggers ever created for Node.js. It's a pleasure to use, it's extensible, and it's _free_.
 
-Here's a sample `launch.json` file for Visual Studio Code you can use to debug Mocha tests. With this, you can set break points in your tests or anywhere in your code that is under test. Debugging in VS Code you can inspect variables, create watch expressions, view the call stack, and step through code.
+Here's a sample `launch.json` file for Visual Studio Code you can use to debug Mocha tests. With this, you can set breakpoints in your tests or anywhere in your code that is under test. Debugging in VS Code you can inspect variables, create watch expressions, view the call stack, and step through code.
 
 ```js
 {
-  // Use IntelliSense to learn about possible attributes.
-  // Hover to view descriptions of existing attributes.
-  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
-  "version": "0.2.0",
-    "configurations": [
-      {
-        "type": "node",
-        "request": "launch",
-        "name": "Debug Mocha Tests",
-        "skipFiles": [
-          "<node_internals>/**"
-        ],
-        "program": "${workspaceFolder}/node_modules/.bin/mocha",
-        "args": [
-          "${workspaceFolder}/mocha"
-        ]
-      }
-    ]
+ // Use IntelliSense to learn about possible attributes.
+ // Hover to view descriptions of existing attributes.
+ // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+ "version": "0.2.0",
+   "configurations": [
+     {
+       "type": "node",
+       "request": "launch",
+       "name": "Debug Mocha Tests",
+       "skipFiles": [
+         "<node_internals>/**"
+       ],
+       "program": "${workspaceFolder}/node_modules/.bin/mocha",
+       "args": [
+         "${workspaceFolder}/mocha"
+       ]
+     }
+   ]
 }
 ```
 
@@ -428,9 +428,9 @@ Here's a sample `launch.json` file for Visual Studio Code you can use to debug M
 
 TypeScript is a testing tool? Sure! TypeScript isn't a replacement for good tests, but it's yet another way you can catch errors before they reach production. This is especially true on larger projects.
 
-A dynamic language like JavaScript is a two-edged sword. Dynamic types give you incredible flexibility, but can also allow bugs to creep in that would usually be caught by a static type system. By design, TypeScript attempts to balance the power of JavaScript with the benefits of static checking.
+A dynamic language like JavaScript is a two-edged sword. Dynamic types give you incredible flexibility, but can also allow bugs to creep in that would usually be caught by a static type system. By design, TypeScript attempts to balance the power of JavaScript with the benefits of static types.
 
-## Final Thoughts on Testing Code in Node.js
+## Final Thoughts on Testing Tools for Node.js
 
 I don't believe you can go wrong choosing from any of these test runners and tools. If I were starting a new project today, my first choice would be Jest. It has most everything built-in, a large community following, and lots of plugins available. However, if Jest's built-in mocking didn't prove to provide enough control, I would reach for TestDouble.
 

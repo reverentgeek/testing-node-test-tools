@@ -22,3 +22,5 @@ test( "should return 4 when adding 2 + 2", t => {
 test( "should return 0 when adding zeros", t => {
 	t.is( calc.add( 0, 0 ), 0 );
 } );
+
+test.todo( "should return a number if passed a string" );
